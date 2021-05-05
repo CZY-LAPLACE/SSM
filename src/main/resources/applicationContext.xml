@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--    开启注解扫描，只扫描service层和dao层-->
+    <context:component-scan base-package = "com.ssm"/>
+
+<!--配置连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306?serverTimezone=GMT%2B8"/>
+        <property name="user" value="root"/>
+        <property name="password" value="19960107"/>
+    </bean>
+<!--    配置sqlSessionFactory工厂-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/ssm/mapper/*.xml"/>
+    </bean>
+<!--    配置AccountDao接口所在的包-->
+    <bean id="mapperScaner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.ssm.dao"/>
+    </bean>
+<!--    配置spring框架声明事务管理-->
+<!--    配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+<!--    配置事务通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+<!--            select方法为只读-->
+            <tx:method name="select*" read-only="true"/>
+<!--            其他方法默认为提交事务-->
+            <tx:method name="*" isolation="DEFAULT"/>
+        </tx:attributes>
+    </tx:advice>
+<!--    配置aop增强-->
+    <aop:config>
+<!--        serviceImpl下所有方法都做事务增强-->
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.ssm.service.impl.*ServiceImpl.*(..))"/>
+    </aop:config>
+</beans>
