@@ -1,5 +1,8 @@
 package com.ssm.pojo;
 
+/**
+ * @author CZY
+ */
 public class User {
     private String create_time;
     private String update_time;

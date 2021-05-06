@@ -5,4 +5,7 @@
     <select id="selectAll" resultType="com.ssm.pojo.User">
         select * from java.t_user where 1=1
     </select>
+    <insert id="accountLogin" parameterType="com.ssm.pojo.User">
+        insert into java.t_user(id,create_time,update_time,is_deleted,user_id,account,real_name,password) value (null,create_time,update_time,0,user_id,account,real_name,password);
+    </insert>
 </mapper>

@@ -22,4 +22,9 @@ public class AccountController {
         map.put("users",users);
         return "list";
     }
+
+    @RequestMapping("accountLogin")
+    public int accountLogin(User user){
+        return accountService.accountLogin(user);
+    }
 }

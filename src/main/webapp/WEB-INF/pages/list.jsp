@@ -31,6 +31,7 @@
             <td>${user.real_name}</td>
             <td>${user.account}</td>
             <td>${user.pass_word}</td>
+            <td>${user.birthday}</td>
         </tr>
     </c:forEach>
 </table>
