@@ -11,6 +11,15 @@ public class User {
     private String real_name;
     private String account;
     private String pass_word;
+    private String birthday;
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     public String getCreate_time() {
         return create_time;

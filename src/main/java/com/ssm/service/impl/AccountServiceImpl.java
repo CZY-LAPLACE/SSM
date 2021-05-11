@@ -32,8 +32,6 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public int accountLogin(User user) {
-        Date date = new Date();
-        user.setCreate_time(date.toString());
         return accountDao.accountLogin(user);
     }
 }

@@ -12,7 +12,7 @@
     <title>跳转界面</title>
 </head>
 <body>
-<table>
+<table border="2px" >
     <tr>
         <th>ID</th>
         <th>创建时间</th>
@@ -21,6 +21,7 @@
         <th>真实姓名</th>
         <th>账号</th>
         <th>密码</th>
+        <th>生日</th>
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>

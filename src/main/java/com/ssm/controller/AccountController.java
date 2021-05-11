@@ -16,7 +16,7 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
-    @RequestMapping("selectAll")
+    @RequestMapping(value = "selectAll")
     public String selectAll(Map map){
         List<User> users = accountService.selectAll();
         map.put("users",users);
